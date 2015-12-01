@@ -3,7 +3,7 @@ var chaihttp = require('chai-http');
 chai.use(chaihttp);
 var expect = chai.expect;
 
-process.env.MONGOLAB_URI = 'mongodb://localhost/word_game_test';
+process.env.MONGOLAB_URI = 'mongodb://localhost/user_test';
 process.env.APP_SECRET = 'hello';
 require(__dirname + '/../lib/server');
 var mongoose = require('mongoose');
