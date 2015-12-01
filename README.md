@@ -1,1 +1,1 @@
-I didn't figure out yet how to implement CRUD
+Basic http authentication for single resource API

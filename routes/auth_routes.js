@@ -6,20 +6,24 @@ var User = require(__dirname + '/../models/user');
 
 var authRouter = module.exports = exports = express.Router();
 authRouter.post('/signup', jsonParser, function(req, res) {
-  var user = new User();
-  user.auth.basic.username = req.body.username;
-  user.username = req.body.username;
-  user.hashPassword(req.body.password);
+  User.findOne({username: req.body.username}, function(err, user) {
+    if (err) throw err;
+    if (user) return res.json({msg: 'that\'s taken'});
 
-  user.save(function(err, data) {
-    if (err) return handleError(err, res);
-    user.generateToken(function(err, token) {
+    var user = new User();
+    user.auth.basic.username = req.body.username;
+    user.username = req.body.username;
+    user.hashPassword(req.body.password);
+
+    user.save(function(err, data) {
       if (err) return handleError(err, res);
-      res.json({token: token});
+      user.generateToken(function(err, token) {
+        if (err) return handleError(err, res);
+        res.json({token: token});
+      });
     });
   });
 });
-
 authRouter.get('/signin', basicHttp, function(req, res) {
   if (!(req.auth.username && req.auth.password)) {
     console.log('no basic auth provided');
