@@ -18,7 +18,7 @@ describe('The Auth routes', function() {
   it('should receive status code 200', function(done) {
     chai.request('localhost:3000')
       .post('/signup')
-      .send({username:'hello',password:'world'})
+      .send({username:'iryna',password:'1234'})
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.body.token).to.exist;
@@ -29,7 +29,7 @@ describe('The Auth routes', function() {
   it('should log a user in', function(done) {
     chai.request('localhost:3000')
       .get('/signin')
-      .auth('hello','world')
+      .auth('iryna','1234')
       .end(function(err, res) {
         expect(err).to.eql(null);
         expect(res.body.token).to.exist;
